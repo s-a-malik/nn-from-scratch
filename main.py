@@ -38,7 +38,7 @@ def parse_args():
     # optimisation parameters
     parser.add_argument('--epochs', type=int, default=1000, help='Number of epochs to train the model')
     parser.add_argument('--batch-size', type=int, default=16, help='Batch size for training')
-    parser.add_argument('--lr', type=float, default=0.01, help='Learning rate for training')
+    parser.add_argument('--lr', type=float, default=0.1, help='Learning rate for training')
     # parser.add_argument('--patience', type=int, default=10, help='Early Stopping Patience')
     # parser.add_argument('--momentum', type=float, default=0.9, help='Momentum for training')
     # parser.add_argument('--no-cuda', action='store_true', default=False, help='Disables CUDA training')
@@ -55,7 +55,7 @@ def parse_args():
     parser.add_argument('--hidden-dim', type=int, default=32, help='Size of hidden layers')
     parser.add_argument('--num-layers', type=int, default=2, choices=[1, 2], help='Number of hidden layers')
     parser.add_argument('--initialisation', type=str, default='normal', choices=['xavier', 'uniform', 'normal'], help='Initialisation method for weights')
-    parser.add_argument('--activation', type=str, default='relu', choices=['relu', 'sigmoid'], help='Activation function')
+    parser.add_argument('--activation', type=str, default='sigmoid', choices=['relu', 'sigmoid'], help='Activation function')
     # parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate')
 
     args = parser.parse_args()

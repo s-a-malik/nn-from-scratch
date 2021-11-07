@@ -73,7 +73,7 @@ def plot_confusion(conf_matrix):
     ax.set_xticklabels([LABEL_DICT[i] for i in range(conf_matrix.shape[1])],
                        rotation=0)
     ax.set_yticklabels([LABEL_DICT[i] for i in range(conf_matrix.shape[1])], 
-                       rotation=0)
+                       rotation=90)
 
     # set the label's font size
     for i in range(conf_matrix.shape[0]):

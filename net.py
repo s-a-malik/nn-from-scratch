@@ -1,12 +1,8 @@
 """Neural Network Classes
 """
 
-import random 
-
 import numpy as np
-from sklearn import preprocessing
 import torch
-
 
 class Module:
     """Base class for all neural network modules.
@@ -92,9 +88,19 @@ def uniform_init(nin, nout):
     """
     return torch.tensor(np.random.uniform(-1, 1, (nin, nout)), requires_grad=True, dtype=torch.float32)
 
+
 # activations
 def relu(x):
-    return torch.max(torch.zeros(x.shape), x)
+    out = torch.max(torch.zeros_like(x), x)
+    
+    def _backward():
+        if x > 0:
+            x.grad += out.grad
+        else:
+            x.grad = 0
+    out.backward = _backward
+    
+    return out
 
 def sigmoid(x):
     return 1 / (1 + torch.exp(-x))
