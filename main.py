@@ -36,12 +36,9 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # optimisation parameters
-    parser.add_argument('--epochs', type=int, default=1000, help='Number of epochs to train the model')
+    parser.add_argument('--epochs', type=int, default=100, help='Number of epochs to train the model')
     parser.add_argument('--batch-size', type=int, default=16, help='Batch size for training')
-    parser.add_argument('--lr', type=float, default=0.1, help='Learning rate for training')
-    # parser.add_argument('--patience', type=int, default=10, help='Early Stopping Patience')
-    # parser.add_argument('--momentum', type=float, default=0.9, help='Momentum for training')
-    # parser.add_argument('--no-cuda', action='store_true', default=False, help='Disables CUDA training')
+    parser.add_argument('--lr', type=float, default=0.01, help='Learning rate for training')
     parser.add_argument('--seed', type=int, default=123, help='Seed for random number generator')
     parser.add_argument('--evaluate', action='store_true', default=False, help='Evaluate the model on the test set, skipping training')
 
@@ -55,8 +52,7 @@ def parse_args():
     parser.add_argument('--hidden-dim', type=int, default=32, help='Size of hidden layers')
     parser.add_argument('--num-layers', type=int, default=2, choices=[1, 2], help='Number of hidden layers')
     parser.add_argument('--initialisation', type=str, default='normal', choices=['xavier', 'uniform', 'normal'], help='Initialisation method for weights')
-    parser.add_argument('--activation', type=str, default='sigmoid', choices=['relu', 'sigmoid'], help='Activation function')
-    # parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate')
+    parser.add_argument('--activation', type=str, default='relu', choices=['relu', 'sigmoid'], help='Activation function')
 
     args = parser.parse_args()
 
@@ -121,21 +117,16 @@ def train(args, model, train_loader, val_loader):
 
         if val_loss_avg < best_val_loss:
             best_val_loss = val_loss_avg
-            # save checkpoint
 
         print(f'Epoch: {epoch + 1}/{args.epochs}, Train Loss: {train_loss_avg}, Val Loss: {val_loss_avg},\n'
-                f'Train Acc: {train_acc_avg}, Val Acc: {val_acc_avg}')
-
-        # early stopping
-
-    # load best model
+                f'Train Acc: {train_acc_avg}, Val Acc: {val_acc_avg} \n'
+                f'Best val loss: {best_val_loss}')
     
-
     return model, train_losses, val_losses, train_accs, val_accs
 
 
 
-def test(args, model, test_loader):
+def test(model, test_loader):
     """Evaluate the model on the test set
     """
 
@@ -158,7 +149,7 @@ def test(args, model, test_loader):
     conf_matrix = confusion_matrix(targets, preds, normalize='true')
 
     test_acc = total_correct / total
-    print(f'Test Accuracy: {test_acc}')
+    print(f'\nTEST ACC: {test_acc}')
     return test_acc, conf_matrix
 
 
@@ -185,7 +176,7 @@ def main(args):
 
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
     # test the model
-    test_acc, conf_matrix = test(args, model, test_loader)
+    test_acc, conf_matrix = test(model, test_loader)
 
     # plot results
     plot_train_curves(train_losses, val_losses, train_accs, val_accs)
