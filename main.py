@@ -181,6 +181,7 @@ def main(args):
     # plot results
     plot_train_curves(train_losses, val_losses, train_accs, val_accs)
     plot_confusion(conf_matrix)
+    print(f"Training curves and Confusion Matrix saved as images in working directory")
 
 
 if __name__ == "__main__":

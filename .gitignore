@@ -141,3 +141,6 @@ checkpoints/
 
 # notebooks
 notebook.ipynb
+
+# zip
+*.zip

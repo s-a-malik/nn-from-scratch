@@ -16,7 +16,7 @@ First install the requirements: `pip install -r requirements.txt`.
 
 Optional arguments (to vary architecture and optimisation hyperparameters) are set using command line arguments, with `main.py` as the entry point. Run `python main.py -h` to check what hyperparameters are customisable. 
 
-To reproduce the results in the report (e.g. training curves and final test metrics), simply run the program (from the same directory) using the default settings:
+To reproduce the results in the report (training curves and final test metrics), simply run the program (from the same directory) using the default settings:
 ```
 python3 main.py
 ```
