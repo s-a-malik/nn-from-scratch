@@ -36,8 +36,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # optimisation parameters
-    parser.add_argument('--epochs', type=int, default=100, help='Number of epochs to train the model')
-    parser.add_argument('--batch-size', type=int, default=16, help='Batch size for training')
+    parser.add_argument('--epochs', type=int, default=300, help='Number of epochs to train the model')
+    parser.add_argument('--batch-size', type=int, default=8, help='Batch size for training')
     parser.add_argument('--lr', type=float, default=0.01, help='Learning rate for training')
     parser.add_argument('--seed', type=int, default=123, help='Seed for random number generator')
     parser.add_argument('--evaluate', action='store_true', default=False, help='Evaluate the model on the test set, skipping training')
@@ -49,9 +49,9 @@ def parse_args():
     parser.add_argument('--checkpoint', type=str, default=None, help='Path to a checkpoint to load (for evaluation)')
 
     # architecture parameters
-    parser.add_argument('--hidden-dim', type=int, default=32, help='Size of hidden layers')
+    parser.add_argument('--hidden-dim', type=int, default=64, help='Size of hidden layers')
     parser.add_argument('--num-layers', type=int, default=2, choices=[1, 2], help='Number of hidden layers')
-    parser.add_argument('--initialisation', type=str, default='normal', choices=['xavier', 'uniform', 'normal'], help='Initialisation method for weights')
+    parser.add_argument('--initialisation', type=str, default='xavier', choices=['xavier', 'uniform', 'normal'], help='Initialisation method for weights')
     parser.add_argument('--activation', type=str, default='relu', choices=['relu', 'sigmoid'], help='Activation function')
 
     args = parser.parse_args()

@@ -14,10 +14,7 @@ We use the [Iris Data Set](https://www.kaggle.com/arshid/iris-flower-dataset) in
 
 Optional arguments (to vary architecture and optimisation hyperparameters) are set using command line arguments, with `main.py` as the entry point. 
 
-
-
-To reproduce the results in the report (e.g. training curves and final test metrics), simply run the program (from the same directory) using the default settings
+To reproduce the results in the report (e.g. training curves and final test metrics), simply run the program (from the same directory) using the default settings:
 ```
-python main.py
+python3 main.py
 ```
-

@@ -8,15 +8,6 @@ import torch
 from torch.utils.data import TensorDataset
 
 
-df = pd.read_csv(f"./IRIS.csv", sep=',')
-# df.head()
-
-# df[df.isnull().any(axis=1)]
-
-# pd.get_dummies()
-# df["species"]
-
-
 def load_iris_data(args):
     """Loads and preprocesses data from a file.
     Params:

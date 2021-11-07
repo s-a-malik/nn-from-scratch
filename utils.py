@@ -45,7 +45,7 @@ def plot_train_curves(train_losses, val_losses, train_accs, val_accs):
     axes[0].plot(train_losses, label='Training Loss')
     axes[0].plot(val_losses, label='Validation Loss')
     axes[0].set_xlabel('Epochs')
-    axes[0].set_ylabel('Loss')
+    axes[0].set_ylabel('Cross Entropy Loss')
     axes[0].set_title('Learning Curves (Loss)')
     axes[0].legend()
     axes[1].plot(train_accs, label='Training Acc')
@@ -55,6 +55,7 @@ def plot_train_curves(train_losses, val_losses, train_accs, val_accs):
     axes[1].set_title('Learning Curves (Accuracy)')
     axes[1].legend()
     
+    plt.tight_layout()
     plt.savefig('training_curves.png', dpi=300)
 
 

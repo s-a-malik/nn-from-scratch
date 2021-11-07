@@ -44,7 +44,7 @@ class NN(Module):
             self.act = Sigmoid
         else:
             raise ValueError('Activation function not supported')
-        
+
     def __call__(self, x):
         """Forward pass of the neural network.
         """
@@ -53,7 +53,7 @@ class NN(Module):
             out = self.act.apply(out @ self.W2 + self.b2)
         # return probabilities
         return softmax(out @ self.W3 + self.b3)
-    
+
     def parameters(self):
         return [self.W1, self.b1, self.W2, self.b2, self.W3, self.b3]
 
