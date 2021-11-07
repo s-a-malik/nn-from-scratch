@@ -3,6 +3,7 @@
 
 import numpy as np
 import torch
+from torch.autograd import Function
 
 class Module:
     """Base class for all neural network modules.
@@ -28,6 +29,7 @@ class NN(Module):
 
         self.num_layers = num_layers
         self.initialisation = initialisation
+        self.activation = activation
 
         self.W1 = initialise(input_dim, hidden_dim, initialisation)
         self.b1 = initialise(1, hidden_dim, initialisation)
@@ -37,22 +39,20 @@ class NN(Module):
         self.b3 = initialise(1, output_dim, initialisation)
 
         if activation == 'relu':
-            self.act = relu 
+            self.act = ReLU
         elif activation == 'sigmoid':
-            self.act = sigmoid
+            self.act = Sigmoid
         else:
             raise ValueError('Activation function not supported')
         
     def __call__(self, x):
         """Forward pass of the neural network.
         """
-        out = self.act(x @ self.W1 + self.b1)
+        out = self.act.apply(x @ self.W1 + self.b1)
         if self.num_layers == 2:
-            out = self.act(out @ self.W2 + self.b2)
-
-        out = sigmoid(out @ self.W3 + self.b3)
+            out = self.act.apply(out @ self.W2 + self.b2)
         # return probabilities
-        return out / torch.sum(out, dim=1, keepdim=True)
+        return softmax(out @ self.W3 + self.b3)
     
     def parameters(self):
         return [self.W1, self.b1, self.W2, self.b2, self.W3, self.b3]
@@ -90,17 +90,37 @@ def uniform_init(nin, nout):
 
 
 # activations
-def relu(x):
-    out = torch.max(torch.zeros_like(x), x)
-    
-    def _backward():
-        if x > 0:
-            x.grad += out.grad
-        else:
-            x.grad = 0
-    out.backward = _backward
-    
-    return out
+class ReLU(Function):
+    """ReLU activation function - need to implement the backward pass bc of max.
+    """
+    @staticmethod
+    def forward(ctx, x):
+        ctx.save_for_backward(x)
+        return torch.max(torch.zeros_like(x), x)
 
-def sigmoid(x):
-    return 1 / (1 + torch.exp(-x))
+    @staticmethod
+    def backward(ctx, grad_output):
+        x = ctx.saved_tensors[0]
+        grad_input = grad_output.clone()
+        grad_input[x <= 0] = 0  # zero gradients where x <= 0
+        return grad_input
+
+class Sigmoid(Function):
+    """Sigmoid activation function
+    """
+
+    @staticmethod
+    def forward(ctx, x):
+        sig = 1/(1 + torch.exp(-x))
+        ctx.save_for_backward(sig)
+        return sig
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        sig = ctx.saved_tensors[0]
+        grad_input = grad_output.clone()
+        grad_input *= sig * (1 - sig)
+        return grad_input
+
+def softmax(x):
+    return torch.exp(x) / torch.sum(torch.exp(x), dim=-1, keepdim=True)

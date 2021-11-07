@@ -64,7 +64,7 @@ def plot_confusion(conf_matrix):
     - conf_matrix (np.array): confusion matrix
     """
 
-    fig, ax = plt.subplots(figsize=(10, 10))
+    fig, ax = plt.subplots(figsize=(7, 7))
     ax.imshow(conf_matrix, cmap='Oranges')
 
     # set the labels
