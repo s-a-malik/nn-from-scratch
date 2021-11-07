@@ -12,6 +12,8 @@ We use the [Iris Data Set](https://www.kaggle.com/arshid/iris-flower-dataset) in
 
 ## Usage
 
+First install the requirements: `pip install -r requirements.txt`. 
+
 Optional arguments (to vary architecture and optimisation hyperparameters) are set using command line arguments, with `main.py` as the entry point. 
 
 To reproduce the results in the report (e.g. training curves and final test metrics), simply run the program (from the same directory) using the default settings:
