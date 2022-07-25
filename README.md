@@ -1,4 +1,4 @@
-# Machine Learning Assignment, AIMS CDT 2021
+# nn-from-scratch
 
 *Author: Shreshth Malik*
 
